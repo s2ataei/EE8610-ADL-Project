@@ -16,34 +16,32 @@ sequences = cat(3,acc_body_x, acc_body_y, acc_body_z, acc_total_x, acc_total_y, 
 
 for x = 1:7352
 
-i = 1; j = i + 1; 
-SIS = int2str(i);
-SI = sequences (x,:,i);
-indx = i;
-ns = 9;
-
-
-while i ~= j
-    if j > ns
-        j = 1;
-    else if isempty(strfind(SIS,strcat(int2str(i),int2str(j)))) && isempty(strfind(SIS,strcat(int2str(j),int2str(i))))
-            SI = [SI;sequences(x,:,j)];
-            SIS = strcat(SIS,int2str(j));
-            i=j;j=i+1;
-        else 
-         j = j + 1;    
+    i = 1; j = i + 1; 
+    SIS = int2str(i);
+    SI = sequences (x,:,i);
+    indx = i;
+    ns = 9;
+    
+    while i ~= j
+        if j > ns
+            j = 1;
+        else
+            if isempty(strfind(SIS,strcat(int2str(i),int2str(j)))) && isempty(strfind(SIS,strcat(int2str(j),int2str(i))))
+                SI = [SI;sequences(x,:,j)];
+                SIS = strcat(SIS,int2str(j));
+                i=j;j=i+1;
+            else 
+             j = j + 1;    
+            end
         end
     end
-end
-SI(37,:) = [];
-activity_images(x,:,:) = log(abs(fftshift(fft2(SI))));
+    SI(37,:) = [];
+    activity_images(x,:,:) = log(abs(fftshift(fft2(SI))));
 end
 
- for i =1: 7352
-     temp = squeeze(activity_images(i,:,:));
-      save(strcat('original .mat/',int2str(i),'.mat'),'temp');
-%     imwrite(squeeze(activity_images(i,:,:)),strcat('activity images/',int2str(i),'.jpg'));
-
+for i =1: 7352
+    temp = squeeze(activity_images(i,:,:));
+    save(strcat('original .mat/',int2str(i),'.mat'),'temp');
 end
 
      
