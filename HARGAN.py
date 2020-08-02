@@ -113,16 +113,9 @@ class GAN():
         
         myClass = images[labels==3,:,:,:]
         
-        #labels = np_utils.to_categorical(labels, num_classes = 6)
-        
-        
-        
-   
 
         # Rescale -1 to 1
         X_train = myClass / (np.max(myClass) - np.min(myClass))
-        #X_train = np.expand_dims(X_train, axis=3)
-        #X_train = myClass
 
         # Adversarial ground truths
         valid = np.ones((batch_size, 1))
